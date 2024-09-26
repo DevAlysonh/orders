@@ -1,0 +1,8 @@
+{
+    "preset": "psr12",
+    "exclude": [
+        "vendor/",
+        "storage/",
+        "docker/"
+    ]
+}
