@@ -1,0 +1,99 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Orders API",
+        "version": "0.0.1"
+    },
+    "paths": {
+        "/api/categories": {
+            "post": {
+                "tags": [
+                    "Categorias"
+                ],
+                "summary": "Registrar uma nova categoria.",
+                "description": "Cria uma nova categoria de produtos. O campo nome é obrigatório e deve ser uma string válida.",
+                "operationId": "cca49a87d9b0ebb9a98ad7c154b71737",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "description": "Nome da categoria",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Categoria registrada.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "msg": {
+                                            "type": "string",
+                                            "example": "Categoria cadastrada."
+                                        },
+                                        "category": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 5
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Lanches"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Requisição inválida, campos inválidos.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "errors": {
+                                            "properties": {
+                                                "name": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "O campo name é orbigatório."
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Categorias",
+            "description": "Categorias"
+        }
+    ]
+}
