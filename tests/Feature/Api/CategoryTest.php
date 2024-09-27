@@ -1,0 +1,36 @@
+<?php
+
+
+it('should to create a category', function () {
+    $response = $this->json('POST', '/api/categories', [
+        'name' => 'Foo Bar',
+    ]);
+
+    $response->assertStatus(201);
+    $data = $response->getData(true);
+
+    expect($data['msg'])->toBe('Categoria cadastrada.');
+    expect($data['category']['name'])->toBe('Foo Bar');
+});
+
+it('should return an error if the request does not have required params', function () {
+    $response = $this->json('POST', '/api/categories', [
+        'other' => 'Foo Bar',
+    ]);
+
+    $responseData = $response->getData(true);
+
+    expect($responseData['errors']['name'][0])
+        ->toBe('O campo name é obrigatório.');
+});
+
+it('should return an error if the name contains an invalid string', function () {
+    $response = $this->json('POST', '/api/categories', [
+        'name' => "<>@foo bar*&^*&*&%",
+    ]);
+
+    $responseData = $response->getData(true);
+
+    expect($responseData['errors']['name'][0])
+        ->toBe('Ops! O nome que você escolheu não é válido. Tente não utilizar caracteres especiais.');
+});
