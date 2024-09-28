@@ -12,8 +12,8 @@ it('should to create a category', function () {
     $response->assertStatus(201);
     $data = $response->getData(true);
 
-    expect($data['msg'])->toBe('Categoria cadastrada.');
-    expect($data['category']['name'])->toBe('Foo Bar');
+    expect($data['message'])->toBe('Categoria cadastrada com sucesso.');
+    expect($data['data']['name'])->toBe('Foo Bar');
 });
 
 it('should return an error if the request does not have required params', function () {
