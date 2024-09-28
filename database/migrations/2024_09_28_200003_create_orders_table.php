@@ -18,7 +18,9 @@ return new class () extends Migration {
                 'finished',
                 'cancelled',
             ]);
-            $table->integer('total');
+            $table->integer('total')
+                ->nullable(false)
+                ->default(0);
             $table->timestamps();
         });
     }
