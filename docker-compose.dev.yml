@@ -36,6 +36,8 @@ services:
       MYSQL_USER: ${DB_USERNAME}
     env_file:
       - .env
+    volumes:
+      - ./docker/mysql/dbdata:/var/lib/mysql
     ports:
       - "3306:3306"
     networks:
