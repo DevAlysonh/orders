@@ -13,7 +13,7 @@ class MenuItemsTransformer implements Transformer
                 return [
                     'id' => $category->id,
                     'name' => $category->name,
-                    'products' => $category->products,
+                    'products' => $category->products->select('id', 'name', 'price'),
                 ];
             }),
             'current_page' => $data->currentPage(),
