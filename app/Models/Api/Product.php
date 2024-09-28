@@ -24,8 +24,7 @@ class Product extends Model
             get: fn (string $value) => number_format(
                 $value / 100,
                 2,
-                '.',
-                ' '
+                '.'
             ),
             set: fn (float $value) => $value * 100,
         );
