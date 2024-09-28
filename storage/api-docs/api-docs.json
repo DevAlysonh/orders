@@ -10,9 +10,9 @@
                 "tags": [
                     "Categorias"
                 ],
-                "summary": "Registrar uma nova categoria.",
-                "description": "Cria uma nova categoria de produtos. O campo nome é obrigatório e deve ser uma string válida.",
-                "operationId": "cca49a87d9b0ebb9a98ad7c154b71737",
+                "summary": "Cadastrar uma Nova Categoria",
+                "description": "Cria uma nova categoria, através de um nome fornecido pelo usuário.",
+                "operationId": "a3473cf33bb221c1d98f90ad6a823555",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -23,7 +23,7 @@
                                 ],
                                 "properties": {
                                     "name": {
-                                        "description": "Nome da categoria",
+                                        "description": "Nome da categoria a ser criada.",
                                         "type": "string"
                                     }
                                 },
@@ -34,27 +34,35 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Categoria registrada.",
+                        "description": "Retornado quando uma categoria é cadastrada com sucesso.",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "msg": {
+                                        "status": {
                                             "type": "string",
-                                            "example": "Categoria cadastrada."
+                                            "example": "success"
                                         },
-                                        "category": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Categoria cadastrada com sucesso."
+                                        },
+                                        "data": {
                                             "properties": {
                                                 "id": {
                                                     "type": "integer",
-                                                    "example": 5
+                                                    "example": 1
                                                 },
                                                 "name": {
                                                     "type": "string",
-                                                    "example": "Lanches"
+                                                    "example": "Bebidas"
                                                 }
                                             },
                                             "type": "object"
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 201
                                         }
                                     },
                                     "type": "object"
@@ -62,23 +70,66 @@
                             }
                         }
                     },
-                    "400": {
-                        "description": "Requisição inválida, campos inválidos.",
+                    "422": {
+                        "description": "Retornado quando ocorre algum erro na validação da requisição",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "A validação dos dados falhou!"
+                                        },
                                         "errors": {
                                             "properties": {
                                                 "name": {
                                                     "type": "array",
                                                     "items": {
                                                         "type": "string",
-                                                        "example": "O campo name é orbigatório."
+                                                        "example": "Campo obrigatório"
                                                     }
                                                 }
                                             },
                                             "type": "object"
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 422
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Retornado quando ocorre algum erro interno interno durante o processamento da solicitação",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Erro interno do servidor."
+                                        },
+                                        "errors": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string",
+                                                "example": "Ocorreu um erro ao processar sua solicitação, tente novamente em instantes."
+                                            }
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 500
                                         }
                                     },
                                     "type": "object"
@@ -96,7 +147,7 @@
                 ],
                 "summary": "Cadastrar um Novo Produto",
                 "description": "Cria um novo produto, que deve, obrigatoriamente, pertencer a uma categoria.",
-                "operationId": "785644b7d7dd38af4b51dafd0fbc1b6d",
+                "operationId": "86042b92310cb78c5a2b88b6321c0d29",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -130,7 +181,7 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Resposta dada quando um produto é cadastrado com sucesso.",
+                        "description": "Retornado quando um produto é cadastrado com sucesso.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -242,7 +293,7 @@
                                             "type": "array",
                                             "items": {
                                                 "type": "string",
-                                                "example": "Ocorreu um erro ao processar sua solicitação, mas já estamos trabalhando para resolver. Tente novamente mais tarde."
+                                                "example": "Ocorreu um erro ao processar sua solicitação, tente novamente em instantes."
                                             }
                                         },
                                         "status_code": {

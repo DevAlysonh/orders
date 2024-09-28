@@ -9,6 +9,7 @@ class ResponseFactory
 {
     public const SUCCESS = 'success';
     public const ERROR = 'error';
+    public const INTERNAL_ERROR_MESSAGE = 'Ocorreu um erro ao processar sua solicitação, tente novamente em instantes.';
 
     public static function make(
         string $status,
