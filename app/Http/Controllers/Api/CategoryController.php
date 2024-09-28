@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\CreateCategoryRequest;
 use App\Services\Api\CategoryService;
 use App\Traits\SwaggerDocs\CategoryControllerDocs;
+use App\Transformers\MenuItemsTransformer;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Throwable;
@@ -34,15 +35,31 @@ class CategoryController extends Controller
                 Response::HTTP_CREATED
             );
         } catch (Throwable $e) {
+            return $this->internalErrorResponse();
+        }
+    }
+
+    public function menuList(string $perPage = '10'): JsonResponse
+    {
+        try {
+            $menuList = $this->categoryService
+                ->getMenuItems($perPage);
+
+            $responseStatus = $menuList->isEmpty()
+                ? Response::HTTP_NO_CONTENT
+                : Response::HTTP_OK;
+
             return response()->json(
                 ResponseFactory::make(
-                    ResponseFactory::ERROR,
-                    'Erro interno do servidor.',
-                    Response::HTTP_INTERNAL_SERVER_ERROR,
-                    [ResponseFactory::INTERNAL_ERROR_MESSAGE]
+                    ResponseFactory::SUCCESS,
+                    $this->categoryService->getLastMessage(),
+                    $responseStatus,
+                    MenuItemsTransformer::transform($menuList)
                 ),
-                Response::HTTP_INTERNAL_SERVER_ERROR
+                $responseStatus
             );
+        } catch (Throwable $e) {
+            return $this->internalErrorResponse();
         }
     }
 }
