@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Api;
 
 use App\Factories\ResponseFactory;
+use App\Rules\ValidPrice;
 use App\Rules\ValidString;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
@@ -21,7 +22,7 @@ class CreateProductRequest extends FormRequest
         return [
             'category_id' => 'required|exists:categories,id',
             'name' => ['required', 'string', new ValidString()],
-            'price' => 'required|decimal:2',
+            'price' => ['required', 'numeric', 'regex:/^\d+(\.\d{1,2})?$/'],
         ];
     }
 
@@ -29,7 +30,8 @@ class CreateProductRequest extends FormRequest
     {
         return [
             '*.required' => 'Campo Obrigatório.',
-            'price.decimal' => 'O preço deve ser um número, com pelo menos duas casas decimais, como: 29.99'
+            'price.numeric' => "O preço deve ser um número válido.",
+            'price.regex' => 'O preço deve ter no máximo duas casas decimais.'
         ];
     }
 
