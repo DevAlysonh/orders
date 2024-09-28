@@ -271,6 +271,179 @@
                 }
             }
         },
+        "/orders": {
+            "post": {
+                "tags": [
+                    "Pedidos"
+                ],
+                "summary": "Registrar um pedido",
+                "description": "Essa rota registra um pedido com base nos produtos fornecidos.",
+                "operationId": "b5ea5a6211921ae199fcff5917a7a74a",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "products": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "product_id": {
+                                                    "description": "ID do produto",
+                                                    "type": "integer"
+                                                },
+                                                "quantity": {
+                                                    "description": "Quantidade do produto a ser adicionada ao pedido",
+                                                    "type": "integer"
+                                                },
+                                                "price": {
+                                                    "description": "Preço unitário do produto",
+                                                    "type": "number",
+                                                    "format": "float"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Pedido registrado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Pedido registrado."
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "order_id": {
+                                                    "type": "integer",
+                                                    "example": 17
+                                                },
+                                                "order_status": {
+                                                    "type": "string",
+                                                    "example": "open"
+                                                },
+                                                "total_cost": {
+                                                    "type": "string",
+                                                    "example": "5.00"
+                                                },
+                                                "products": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "product_id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "product_name": {
+                                                                "type": "string",
+                                                                "example": "Pizza Marguerita"
+                                                            },
+                                                            "price": {
+                                                                "type": "string",
+                                                                "example": "2.50"
+                                                            },
+                                                            "quantity": {
+                                                                "type": "integer",
+                                                                "example": 2
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Erro de validação",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "A validação dos dados falhou!"
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "products.0.price": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "O preço deve ter no máximo duas casas decimais."
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 422
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Erro interno do servidor."
+                                        },
+                                        "errors": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string",
+                                                "example": "Ocorreu um erro ao processar sua solicitação, tente novamente em instantes."
+                                            }
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 500
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/products": {
             "post": {
                 "tags": [
@@ -449,6 +622,10 @@
         {
             "name": "Cardápio",
             "description": "Cardápio"
+        },
+        {
+            "name": "Pedidos",
+            "description": "Pedidos"
         },
         {
             "name": "Produtos",

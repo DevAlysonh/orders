@@ -5,9 +5,9 @@ namespace Database\Factories\Api;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Api\Product>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Api\Order>
  */
-class ProductFactory extends Factory
+class OrderFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,9 +17,7 @@ class ProductFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => ucfirst(fake()->word()),
-            'price' => 2.55,
-            'category_id' => 1
+            //
         ];
     }
 }
