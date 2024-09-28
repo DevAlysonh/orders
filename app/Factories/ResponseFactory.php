@@ -2,7 +2,6 @@
 
 namespace App\Factories;
 
-
 use App\Http\Responses\ResponseError;
 use App\Http\Responses\ResponseSuccess;
 
