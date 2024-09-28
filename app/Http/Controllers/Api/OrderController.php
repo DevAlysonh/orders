@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\CreateOrderRequest;
 use App\Services\Api\OrderService;
 use App\Traits\SwaggerDocs\OrderControllerDocs;
+use App\Transformers\OrderListTransformer;
 use App\Transformers\OrderTransformer;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
@@ -36,6 +37,25 @@ class OrderController extends Controller
             );
         } catch (Throwable $e) {
             return $this->internalErrorResponse();
+        }
+    }
+
+    public function list(string $perPage = '10')
+    {
+        try {
+            $ordersList = $this->orderService->listOrders($perPage);
+
+            return response()->json(
+                ResponseFactory::make(
+                    ResponseFactory::SUCCESS,
+                    $this->orderService->getLastMessage(),
+                    Response::HTTP_OK,
+                    OrderListTransformer::transform($ordersList)
+                ),
+                Response::HTTP_OK
+            );
+        } catch (Throwable $e) {
+            $this->internalErrorResponse();
         }
     }
 }

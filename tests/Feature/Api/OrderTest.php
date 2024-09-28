@@ -3,16 +3,16 @@
 use App\Models\Api\Category;
 use App\Models\Api\Order;
 use App\Models\Api\Product;
+use App\Services\Api\OrderService;
 
 beforeEach(function () {
+    $orderService = new OrderService();
     $this->category = Category::factory()->create();
     $this->product = Product::factory()->state([
         'category_id' => $this->category->id,
     ])->create();
-});
 
-it('should to create an order', function () {
-    $productsArray = [
+    $this->productsArray = [
         [
             'product_id' => $this->product->id,
             'quantity' => 2,
@@ -25,8 +25,13 @@ it('should to create an order', function () {
         ],
     ];
 
+    $orderService->newOrder($this->productsArray);
+
+});
+
+it('should to create an order', function () {
     $response = $this->json('POST', '/api/orders', [
-        'products' => $productsArray,
+        'products' => $this->productsArray,
     ]);
     $response->assertStatus(201);
 
@@ -88,4 +93,14 @@ it('should return an validation exception if the product does not exists', funct
     expect($data['errors'])->not()->toBeEmpty()
         ->and($data['errors']['products.0.product_id'][0])
         ->toEqual('O produto não existe.');
+});
+
+it('should list all orders', function () {
+    $response = $this->json('GET', '/api/orders');
+    $response->assertStatus(200);
+    $data = $response->getData(true);
+
+    expect($data['data'])->not()->toBeEmpty()
+        ->and($data['data']['orders'][0]['total_cost'])->toEqual('6.65')
+        ->and($data['data']['orders'][0]['id'])->toEqual(1);
 });

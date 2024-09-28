@@ -16,4 +16,5 @@ Route::controller(ProductController::class)->group(function () {
 
 Route::controller(OrderController::class)->group(function () {
     Route::post('/orders', 'store');
+    Route::get('/orders/{perPage?}', 'list');
 });
