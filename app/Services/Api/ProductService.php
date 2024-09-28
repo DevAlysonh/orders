@@ -2,7 +2,6 @@
 
 namespace App\Services\Api;
 
-use App\Exceptions\NotFoundException;
 use App\Models\Api\Category;
 use App\Models\Api\Product;
 
@@ -14,13 +13,7 @@ class ProductService
     {
         $category = Category::find($productData['category_id']);
 
-        if (!$category) {
-            $this->lastMessage = 'Categoria não existe, ou é inválida.';
-            throw new NotFoundException();
-        }
-
         $this->lastMessage = 'Produto cadastrado com sucesso.';
-
         $product = Product::create([
             'category_id' => $category->id,
             'name' => $productData['name'],
