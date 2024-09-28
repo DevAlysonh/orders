@@ -9,6 +9,7 @@ use App\Models\Api\Product;
 class ProductService
 {
     protected string $lastMessage = '';
+
     public function newProduct(array $productData): ?array
     {
         $category = Category::find($productData['category_id']);
@@ -23,7 +24,7 @@ class ProductService
         $product = Product::create([
             'category_id' => $category->id,
             'name' => $productData['name'],
-            'price' => $this->handleProductPrice($productData['price']),
+            'price' => $productData['price'],
         ]);
 
         return $product->only(['id', 'name', 'category_id', 'price']);
@@ -32,10 +33,5 @@ class ProductService
     public function getLastMessage(): string
     {
         return $this->lastMessage;
-    }
-
-    private function handleProductPrice(string $price): int
-    {
-        return (int) preg_replace('/\D/', '', $price);
     }
 }
