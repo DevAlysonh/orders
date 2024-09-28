@@ -34,15 +34,7 @@ class CategoryController extends Controller
                 Response::HTTP_CREATED
             );
         } catch (Throwable $e) {
-            return response()->json(
-                ResponseFactory::make(
-                    ResponseFactory::ERROR,
-                    'Erro interno do servidor.',
-                    Response::HTTP_INTERNAL_SERVER_ERROR,
-                    [ResponseFactory::INTERNAL_ERROR_MESSAGE]
-                ),
-                Response::HTTP_INTERNAL_SERVER_ERROR
-            );
+            return $this->internalErrorResponse();
         }
     }
 }

@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Factories\ResponseFactory;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 use OpenApi\Annotations as OA;
 
 /**
@@ -9,5 +12,16 @@ use OpenApi\Annotations as OA;
  */
 abstract class Controller
 {
-    //
+    protected function internalErrorResponse(): JsonResponse
+    {
+        return response()->json(
+            ResponseFactory::make(
+                ResponseFactory::ERROR,
+                'Erro interno do servidor.',
+                Response::HTTP_INTERNAL_SERVER_ERROR,
+                [ResponseFactory::INTERNAL_ERROR_MESSAGE]
+            ),
+            Response::HTTP_INTERNAL_SERVER_ERROR
+        );
+    }
 }
