@@ -12,16 +12,23 @@ class CategoryService
     {
         $category = Category::create($categoryData);
 
-        $this->lastMessage = "Categoria cadastrada com sucesso.";
+        $this->lastMessage = 'Categoria cadastrada com sucesso.';
         return $category->only(['id', 'name']);
     }
 
     public function getMenuItems(string $perPage): LengthAwarePaginator
     {
-        $this->lastMessage = 'Cardápio listado por categorias.';
-        return Category::with('products:id,category_id,name,price')
+        $this->lastMessage = 'Itens do cardápio.';
+
+        $menu = Category::with('products:id,category_id,name,price')
             ->orderBy('name')
             ->paginate($perPage);
+
+        if ($menu->isEmpty()) {
+            $this->lastMessage = 'Seu cardápio ainda não possui nenhum item.';
+        }
+
+        return $menu;
     }
 
     public function getLastMessage(): string

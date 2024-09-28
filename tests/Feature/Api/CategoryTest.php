@@ -42,6 +42,7 @@ it('should return a menu with all categories with your products', function () {
     $category = Category::factory()->has(Product::factory(1))->create();
     $response = $this->json('GET', '/api/categories/menu');
 
+    $response->assertStatus(200);
     $data = $response->getData(true);
 
     expect($data['data']['menu'])->not()->toBeEmpty()
@@ -50,4 +51,13 @@ it('should return a menu with all categories with your products', function () {
         ->and($data['data']['menu'][0]['products'][0]['price'])->toEqual('2.50')
         ->and($data['data']['current_page'])->toEqual(1)
         ->and($data['data']['last_page'])->toEqual(1);
+});
+
+it('should return no content if no category is found', function () {
+    $response = $this->json('GET', '/api/categories/menu');
+
+    $response->assertStatus(204);
+    $data = $response->getData(true);
+
+    expect($data['data']['menu'])->toBeEmpty();
 });

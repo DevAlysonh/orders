@@ -45,14 +45,18 @@ class CategoryController extends Controller
             $menuList = $this->categoryService
                 ->getMenuItems($perPage);
 
+            $responseStatus = $menuList->isEmpty()
+                ? Response::HTTP_NO_CONTENT
+                : Response::HTTP_OK;
+
             return response()->json(
                 ResponseFactory::make(
                     ResponseFactory::SUCCESS,
                     $this->categoryService->getLastMessage(),
-                    Response::HTTP_OK,
+                    $responseStatus,
                     MenuItemsTransformer::transform($menuList)
                 ),
-                Response::HTTP_OK
+                $responseStatus
             );
         } catch (Throwable $e) {
             return $this->internalErrorResponse();
