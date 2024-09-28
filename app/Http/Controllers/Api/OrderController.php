@@ -6,6 +6,7 @@ use App\Factories\ResponseFactory;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\CreateOrderRequest;
 use App\Services\Api\OrderService;
+use App\Traits\SwaggerDocs\OrderControllerDocs;
 use App\Transformers\OrderTransformer;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
@@ -13,6 +14,8 @@ use Throwable;
 
 class OrderController extends Controller
 {
+    use OrderControllerDocs;
+
     public function __construct(protected OrderService $orderService)
     {
     }
