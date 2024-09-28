@@ -3,7 +3,6 @@
 namespace App\Http\Requests\Api;
 
 use App\Factories\ResponseFactory;
-use App\Rules\ValidPrice;
 use App\Rules\ValidString;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
