@@ -18,7 +18,7 @@ class ProductFactory extends Factory
     {
         return [
             'name' => ucfirst(fake()->word()),
-            'price' => 2.50,
+            'price' => 2.55,
             'category_id' => 1
         ];
     }
