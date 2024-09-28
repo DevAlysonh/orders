@@ -17,7 +17,13 @@ class OrderService
 
         $this->addProductsToOrder($order, $products);
 
+        $this->lastMessage = 'Pedido registrado.';
         return $order;
+    }
+
+    public function getLastMessage(): string
+    {
+        return $this->lastMessage;
     }
 
     private function addProductsToOrder(Order $order, array $products): void
