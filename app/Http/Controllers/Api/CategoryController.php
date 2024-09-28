@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\CreateCategoryRequest;
 use App\Services\Api\CategoryService;
 use App\Traits\SwaggerDocs\CategoryControllerDocs;
+use App\Transformers\MenuItemsTransformer;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Throwable;
@@ -32,6 +33,26 @@ class CategoryController extends Controller
                     $category
                 ),
                 Response::HTTP_CREATED
+            );
+        } catch (Throwable $e) {
+            return $this->internalErrorResponse();
+        }
+    }
+
+    public function menuList(string $perPage = '10'): JsonResponse
+    {
+        try {
+            $menuList = $this->categoryService
+                ->getMenuItems($perPage);
+
+            return response()->json(
+                ResponseFactory::make(
+                    ResponseFactory::SUCCESS,
+                    $this->categoryService->getLastMessage(),
+                    Response::HTTP_OK,
+                    MenuItemsTransformer::transform($menuList)
+                ),
+                Response::HTTP_OK
             );
         } catch (Throwable $e) {
             return $this->internalErrorResponse();
