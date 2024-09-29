@@ -29,7 +29,7 @@ DB_PASSWORD=rootsecret
 
 ### Depois de tudo configurado, basta subir os containers:
 ```
-docker-compose -f docker-compose.dev.yml up -d
+docker-compose -f docker-compose.dev.yml up -d --build
 ```
 
 ### Se nenhum erro aconteceu, tudo deve estar pronto, agora:
@@ -78,5 +78,5 @@ Se você ainda não tiver o banco de testes, o laravel vai perguntar se deseja c
 
 Então, execute os testes da aplicação:
 ```
-docker exec -it orders-app composer pest
+docker exec -it orders-app composer test
 ```
