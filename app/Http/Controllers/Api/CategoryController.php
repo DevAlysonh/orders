@@ -15,6 +15,7 @@ use Throwable;
 class CategoryController extends Controller
 {
     use CategoryControllerDocs;
+
     public function __construct(protected CategoryService $categoryService)
     {
     }
@@ -23,7 +24,7 @@ class CategoryController extends Controller
     {
         try {
             $category = $this->categoryService
-                ->create($request->validated());
+                ->newCategory($request->validated());
 
             return response()->json(
                 ResponseFactory::make(
@@ -39,11 +40,11 @@ class CategoryController extends Controller
         }
     }
 
-    public function menuList(string $perPage = '10'): JsonResponse
+    public function menu(string $perPage = '10'): JsonResponse
     {
         try {
             $menuList = $this->categoryService
-                ->getMenuItems($perPage);
+                ->getMenu($perPage);
 
             $responseStatus = $menuList->isEmpty()
                 ? Response::HTTP_NO_CONTENT

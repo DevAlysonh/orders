@@ -8,7 +8,8 @@ use Illuminate\Pagination\LengthAwarePaginator;
 class CategoryService
 {
     protected string $lastMessage = '';
-    public function create(array $categoryData): ?array
+
+    public function newCategory(array $categoryData): ?array
     {
         $category = Category::create($categoryData);
 
@@ -16,7 +17,7 @@ class CategoryService
         return $category->only(['id', 'name']);
     }
 
-    public function getMenuItems(string $perPage): LengthAwarePaginator
+    public function getMenu(string $perPage): LengthAwarePaginator
     {
         $this->lastMessage = 'Itens do cardápio.';
 
