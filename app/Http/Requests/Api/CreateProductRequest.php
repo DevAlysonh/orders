@@ -28,10 +28,10 @@ class CreateProductRequest extends FormRequest
     public function messages(): array
     {
         return [
-            '*.required' => 'Campo Obrigatório.',
-            'category_id.exists' => 'A categoria selecionada é inválida.',
-            'price.numeric' => "O preço deve ser um número válido.",
-            'price.regex' => 'O preço deve ter no máximo duas casas decimais.'
+            '*.required' => 'Campo Obrigatório',
+            'category_id.exists' => 'A categoria selecionada é inválida',
+            'price.numeric' => "O preço deve ser um número válido",
+            'price.regex' => 'O preço deve ter no máximo duas casas decimais'
         ];
     }
 

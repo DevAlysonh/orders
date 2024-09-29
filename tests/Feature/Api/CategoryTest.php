@@ -12,7 +12,7 @@ it('should to create a category', function () {
     $response->assertStatus(201);
     $data = $response->getData(true);
 
-    expect($data['message'])->toBe('Categoria cadastrada com sucesso.');
+    expect($data['message'])->toBe('Categoria cadastrada com sucesso');
     expect($data['data']['name'])->toBe('Foo Bar');
 });
 
@@ -24,7 +24,7 @@ it('should return an error if the request does not have required params', functi
     $responseData = $response->getData(true);
 
     expect($responseData['errors']['name'][0])
-        ->toBe('O campo name é obrigatório.');
+        ->toBe('O campo name é obrigatório');
 });
 
 it('should return an error if the name contains an invalid string', function () {
@@ -35,7 +35,7 @@ it('should return an error if the name contains an invalid string', function () 
     $responseData = $response->getData(true);
 
     expect($responseData['errors']['name'][0])
-        ->toBe('Ops! O nome que você escolheu não é válido. Tente não utilizar caracteres especiais.');
+        ->toBe('Ops! O nome que você escolheu não é válido. Tente não utilizar caracteres especiais');
 });
 
 it('should return a menu with all categories with your products', function () {

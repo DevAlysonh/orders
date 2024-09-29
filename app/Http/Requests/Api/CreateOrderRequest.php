@@ -31,18 +31,18 @@ class CreateOrderRequest extends FormRequest
     public function messages()
     {
         return [
-            'products.required' => 'A lista de produtos é obrigatória.',
-            'products.array' => 'A lista de produtos deve ser um array.',
-            'products.*.product_id.required' => 'O id do produto é obrigatório.',
-            'products.*.product_id.integer' => 'O id do produto deve ser um número inteiro.',
-            'products.*.product_id.exists' => 'O produto não existe.',
-            'products.*.quantity.required' => 'A quantidade é obrigatória.',
-            'products.*.quantity.integer' => 'A quantidade deve ser um número inteiro.',
-            'products.*.quantity.min' => 'A quantidade deve ser pelo menos 1.',
-            'products.*.price.required' => 'O preço é obrigatório.',
-            'products.*.price.numeric' => 'O preço deve ser um número válido.',
-            'products.*.price.min' => 'O preço não pode ser negativo.',
-            'products.*.price.regex' => 'O preço deve ter no máximo duas casas decimais.'
+            'products.required' => 'A lista de produtos é obrigatória',
+            'products.array' => 'A lista de produtos deve ser um array',
+            'products.*.product_id.required' => 'O id do produto é obrigatório',
+            'products.*.product_id.integer' => 'O id do produto deve ser um número inteiro',
+            'products.*.product_id.exists' => 'O produto não existe',
+            'products.*.quantity.required' => 'A quantidade é obrigatória',
+            'products.*.quantity.integer' => 'A quantidade deve ser um número inteiro',
+            'products.*.quantity.min' => 'A quantidade deve ser pelo menos 1',
+            'products.*.price.required' => 'O preço é obrigatório',
+            'products.*.price.numeric' => 'O preço deve ser um número válido',
+            'products.*.price.min' => 'O preço não pode ser negativo',
+            'products.*.price.regex' => 'O preço deve ter no máximo duas casas decimais'
         ];
     }
 

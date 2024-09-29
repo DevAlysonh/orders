@@ -20,6 +20,6 @@ class ValidString implements ValidationRule
     }
     public function message()
     {
-        return 'Ops! O nome que você escolheu não é válido. Tente não utilizar caracteres especiais.';
+        return 'Ops! O nome que você escolheu não é válido. Tente não utilizar caracteres especiais';
     }
 }

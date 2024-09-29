@@ -34,10 +34,10 @@ class CreateCategoryRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.required' => "O campo name é obrigatório.",
-            'name.string' => "O campo name deve ser uma string.",
-            'name.max' => "O campo name deve ter até 30 caracteres.",
-            'name.unique' => "Já existe uma categoria com esse nome.",
+            'name.required' => "O campo name é obrigatório",
+            'name.string' => "O campo name deve ser uma string",
+            'name.max' => "O campo name deve ter até 30 caracteres",
+            'name.unique' => "Já existe uma categoria com esse nome",
         ];
     }
 
