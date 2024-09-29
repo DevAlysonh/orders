@@ -2,11 +2,13 @@
 
 namespace App\Http\Requests\Api;
 
+use App\Factories\ResponseFactory;
 use App\Models\Api\Category;
 use App\Rules\ValidString;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\Response;
 use Illuminate\Validation\Rule;
 
 class CreateCategoryRequest extends FormRequest
@@ -46,8 +48,14 @@ class CreateCategoryRequest extends FormRequest
 
     protected function failedValidation(Validator $validator)
     {
-        throw new HttpResponseException(response()->json([
-            'errors' => $validator->errors()
-        ], 400));
+        throw new HttpResponseException(response()->json(
+            ResponseFactory::make(
+                ResponseFactory::ERROR,
+                ResponseFactory::VALIDATION_ERROR_MESSAGE,
+                Response::HTTP_UNPROCESSABLE_ENTITY,
+                $validator->errors()->toArray()
+            ),
+            Response::HTTP_UNPROCESSABLE_ENTITY
+        ));
     }
 }

@@ -51,7 +51,7 @@ class CreateOrderRequest extends FormRequest
         throw new HttpResponseException(response()->json(
             ResponseFactory::make(
                 ResponseFactory::ERROR,
-                'A validação dos dados falhou!',
+                ResponseFactory::VALIDATION_ERROR_MESSAGE,
                 Response::HTTP_UNPROCESSABLE_ENTITY,
                 $validator->errors()->toArray()
             ),
