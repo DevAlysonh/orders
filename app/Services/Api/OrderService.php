@@ -2,6 +2,7 @@
 
 namespace App\Services\Api;
 
+use App\Exceptions\NotFoundException;
 use App\Models\Api\Order;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -26,6 +27,19 @@ class OrderService
     {
         $this->lastMessage = 'Lista de pedidos.';
         return Order::select('id', 'total')->paginate($perPage);
+    }
+
+    public function findOrderWithProducts(string $orderId): ?Order
+    {
+        $order = Order::with('products')->find($orderId);
+
+        if (!$order) {
+            $this->lastMessage = 'O pedido não foi localizado.';
+            throw new NotFoundException();
+        }
+
+        $this->lastMessage = 'Detalhes do pedido.';
+        return $order;
     }
 
     public function getLastMessage(): string

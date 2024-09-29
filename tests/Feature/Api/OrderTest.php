@@ -25,7 +25,7 @@ beforeEach(function () {
         ],
     ];
 
-    $orderService->newOrder($this->productsArray);
+    $this->order = $orderService->newOrder($this->productsArray);
 
 });
 
@@ -96,11 +96,27 @@ it('should return an validation exception if the product does not exists', funct
 });
 
 it('should list all orders', function () {
-    $response = $this->json('GET', '/api/orders');
+    $response = $this->json('GET', '/api/orders/list');
     $response->assertStatus(200);
     $data = $response->getData(true);
 
     expect($data['data'])->not()->toBeEmpty()
         ->and($data['data']['orders'][0]['total_cost'])->toEqual('6.65')
-        ->and($data['data']['orders'][0]['id'])->toEqual(1);
+        ->and($data['data']['orders'][0]['id'])->toEqual($this->order->id);
+});
+
+it('should to return order details', function () {
+    $response = $this->json('GET', '/api/orders/' . $this->order->id);
+    $response->assertStatus(200);
+
+    $data = $response->getData(true);
+    expect($data['data'])->not()->toBeEmpty()
+        ->and($data['data']['products'])->toHaveCount(2)
+        ->and($data['data']['total_cost'])->toEqual('6.65')
+        ->and($data['data']['order_status'])->toEqual(Order::STATUS_OPEN);
+});
+
+it('should to return not found when an user try to get an incorrect order', function () {
+    $response = $this->json('GET', '/api/orders/144');
+    $response->assertStatus(404);
 });
