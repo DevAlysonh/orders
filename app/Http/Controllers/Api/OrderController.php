@@ -38,7 +38,7 @@ class OrderController extends Controller
                 Response::HTTP_CREATED
             );
         } catch (Throwable $e) {
-            return $this->internalErrorResponse();
+            return $this->internalErrorResponse($e);
         }
     }
 
@@ -67,7 +67,7 @@ class OrderController extends Controller
                 Response::HTTP_NOT_FOUND
             );
         } catch (Throwable $e) {
-            return $this->internalErrorResponse();
+            return $this->internalErrorResponse($e);
         }
     }
 
@@ -96,7 +96,7 @@ class OrderController extends Controller
                 Response::HTTP_NOT_FOUND
             );
         } catch (Throwable $e) {
-            return $this->internalErrorResponse();
+            return $this->internalErrorResponse($e);
         }
     }
 
@@ -119,7 +119,7 @@ class OrderController extends Controller
                 $responseStatus
             );
         } catch (Throwable $e) {
-            return $this->internalErrorResponse();
+            return $this->internalErrorResponse($e);
         }
     }
 }

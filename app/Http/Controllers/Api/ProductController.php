@@ -33,7 +33,7 @@ class ProductController extends Controller
                 Response::HTTP_CREATED
             );
         } catch (Throwable $e) {
-            return $this->internalErrorResponse();
+            return $this->internalErrorResponse($e);
         }
     }
 }

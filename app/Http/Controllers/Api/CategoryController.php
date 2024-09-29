@@ -36,7 +36,7 @@ class CategoryController extends Controller
                 Response::HTTP_CREATED
             );
         } catch (Throwable $e) {
-            return $this->internalErrorResponse();
+            return $this->internalErrorResponse($e);
         }
     }
 
@@ -60,7 +60,7 @@ class CategoryController extends Controller
                 $responseStatus
             );
         } catch (Throwable $e) {
-            return $this->internalErrorResponse();
+            return $this->internalErrorResponse($e);
         }
     }
 }
