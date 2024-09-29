@@ -45,17 +45,21 @@ class OrderController extends Controller
         try {
             $ordersList = $this->orderService->listOrders($perPage);
 
+            $responseStatus = $ordersList->isEmpty()
+                ? Response::HTTP_NO_CONTENT
+                : Response::HTTP_OK;
+
             return response()->json(
                 ResponseFactory::make(
                     ResponseFactory::SUCCESS,
                     $this->orderService->getLastMessage(),
-                    Response::HTTP_OK,
+                    $responseStatus,
                     OrderListTransformer::transform($ordersList)
                 ),
-                Response::HTTP_OK
+                $responseStatus
             );
         } catch (Throwable $e) {
-            $this->internalErrorResponse();
+            return $this->internalErrorResponse();
         }
     }
 }
