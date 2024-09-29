@@ -444,14 +444,14 @@
                 }
             }
         },
-        "/api/orders/": {
+        "/api/orders/list/": {
             "get": {
                 "tags": [
                     "Pedidos"
                 ],
                 "summary": "Retorna os pedidos já registrados no sistema",
                 "description": "Retorna uma lista contendo os pedidos registrados no sistema com paginação.",
-                "operationId": "05e096eb9aa8b192651e5103dab99ad6",
+                "operationId": "9821472babd6a1dfd76eb331f8b1795e",
                 "parameters": [
                     {
                         "name": "perPage",
@@ -523,6 +523,153 @@
                     },
                     "500": {
                         "description": "Retornado quando ocorre algum erro interno interno durante o processamento da solicitação",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Erro interno do servidor."
+                                        },
+                                        "errors": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string",
+                                                "example": "Ocorreu um erro ao processar sua solicitação, tente novamente em instantes."
+                                            }
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 500
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/orders/{order}": {
+            "get": {
+                "tags": [
+                    "Pedidos"
+                ],
+                "summary": "Listar detalhes de um pedido",
+                "description": "Retorna os detalhes de um pedido específico com base no ID do pedido.",
+                "operationId": "a613613bdc96b47167766c78e19ec687",
+                "parameters": [
+                    {
+                        "name": "order_id",
+                        "in": "path",
+                        "description": "ID do pedido",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalhes do pedido obtidos com sucesso.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Detalhes do pedido."
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "order_id": {
+                                                    "type": "integer",
+                                                    "example": 4
+                                                },
+                                                "order_status": {
+                                                    "type": "string",
+                                                    "example": "open"
+                                                },
+                                                "total_cost": {
+                                                    "type": "string",
+                                                    "example": "5.00"
+                                                },
+                                                "products": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "product_id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "product_name": {
+                                                                "type": "string",
+                                                                "example": "Pizza Marguerita"
+                                                            },
+                                                            "price": {
+                                                                "type": "string",
+                                                                "example": "2.50"
+                                                            },
+                                                            "quantity": {
+                                                                "type": "integer",
+                                                                "example": 2
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 200
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Pedido não encontrado.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "O pedido não foi localizado."
+                                        },
+                                        "errors": {
+                                            "type": "array",
+                                            "items": {}
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 404
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor.",
                         "content": {
                             "application/json": {
                                 "schema": {
