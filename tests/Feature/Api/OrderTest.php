@@ -120,3 +120,61 @@ it('should to return not found when an user try to get an incorrect order', func
     $response = $this->json('GET', '/api/orders/144');
     $response->assertStatus(404);
 });
+
+it('should update an order status', function () {
+    $response = $this->json('PATCH', "/api/orders/{$this->order->id}", [
+        'status' => 'approved'
+    ]);
+    $response->assertStatus(200);
+
+    $data = $response->getData(true);
+    expect($data['data'])->not()->toBeEmpty()
+        ->and($data['data']['products'])->toHaveCount(2)
+        ->and($data['data']['total_cost'])->toEqual('6.65')
+        ->and($data['data']['order_status'])->toEqual(Order::STATUS_APPROVED);
+});
+
+it('should to return not found when an user try to update an incorrect order', function () {
+    $response = $this->json('PATCH', "/api/orders/144", [
+        'status' => 'approved'
+    ]);
+    $response->assertStatus(404);
+});
+
+it('should return a validation error when an user try to update order status using an unaccepted status', function () {
+    $response = $this->json('PATCH', "/api/orders/{$this->order->id}", [
+        'status' => 'somestatus'
+    ]);
+    $response->assertStatus(422);
+
+    $data = $response->getData(true);
+
+    expect($data['errors'])->not()->toBeEmpty()
+        ->and($data['errors']['status'][0])
+            ->toEqual('O status deve ser um desses: "open", "approved", "finished", "cancelled"');
+});
+
+it('should return a validation error when the update request does not have the status field', function () {
+    $response = $this->json('PATCH', "/api/orders/{$this->order->id}");
+    $response->assertStatus(422);
+
+    $data = $response->getData(true);
+
+    expect($data['errors'])->not()->toBeEmpty()
+        ->and($data['errors']['status'][0])
+            ->toEqual('Campo obrigatório');
+});
+
+it('should return a validation error when the update request have other order fields', function () {
+    $response = $this->json('PATCH', "/api/orders/{$this->order->id}", [
+        'status' => 'approved',
+        'total' => 2.75
+    ]);
+    $response->assertStatus(422);
+
+    $data = $response->getData(true);
+
+    expect($data['errors'])->not()->toBeEmpty()
+        ->and($data['errors']['total'][0])
+        ->toEqual('O campo total não é permitido');
+});
