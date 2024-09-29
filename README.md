@@ -1,6 +1,8 @@
 # Documentação dos Endpoints (disponível apenas após o setup do projeto):
 http://localhost/api/documentation/
 
+#### Se você preferir, pode usar o arquivo (ApiOrders.postman_collection.json) presente na raiz do projeto, para testar a aplicação via POSTMAN. Para isso, basta abrir o postman, e importar essa coleção.
+
 # Requisitos:
 * Docker
 
