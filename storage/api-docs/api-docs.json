@@ -444,6 +444,117 @@
                 }
             }
         },
+        "/api/orders/": {
+            "get": {
+                "tags": [
+                    "Pedidos"
+                ],
+                "summary": "Retorna os pedidos já registrados no sistema",
+                "description": "Retorna uma lista contendo os pedidos registrados no sistema com paginação.",
+                "operationId": "05e096eb9aa8b192651e5103dab99ad6",
+                "parameters": [
+                    {
+                        "name": "perPage",
+                        "in": "query",
+                        "description": "Número de itens por página (opcional, valor padrão é 10)",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 10
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Retornado quando o sistema consgue encontrar categorias cadastradas.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Lista de pedidos."
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "orders": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "total_cost": {
+                                                                "type": "string",
+                                                                "example": "6.50"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "current_page": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "last_page": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 200
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "Retornado quando nenhum pedido é encontrado."
+                    },
+                    "500": {
+                        "description": "Retornado quando ocorre algum erro interno interno durante o processamento da solicitação",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Erro interno do servidor."
+                                        },
+                                        "errors": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string",
+                                                "example": "Ocorreu um erro ao processar sua solicitação, tente novamente em instantes."
+                                            }
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 500
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/products": {
             "post": {
                 "tags": [

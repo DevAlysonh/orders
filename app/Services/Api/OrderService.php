@@ -3,10 +3,11 @@
 namespace App\Services\Api;
 
 use App\Models\Api\Order;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class OrderService
 {
-    protected string $lastMessage;
+    protected string $lastMessage = '';
 
     public function newOrder(array $products): Order
     {
@@ -19,6 +20,12 @@ class OrderService
 
         $this->lastMessage = 'Pedido registrado.';
         return $order;
+    }
+
+    public function listOrders(string $perPage): LengthAwarePaginator
+    {
+        $this->lastMessage = 'Lista de pedidos.';
+        return Order::select('id', 'total')->paginate($perPage);
     }
 
     public function getLastMessage(): string
