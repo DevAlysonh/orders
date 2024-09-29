@@ -271,14 +271,14 @@
                 }
             }
         },
-        "/orders": {
+        "/api/orders": {
             "post": {
                 "tags": [
                     "Pedidos"
                 ],
                 "summary": "Registrar um pedido",
                 "description": "Essa rota registra um pedido com base nos produtos fornecidos.",
-                "operationId": "b5ea5a6211921ae199fcff5917a7a74a",
+                "operationId": "8788d107c62636d05701794a14de3c55",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -565,7 +565,7 @@
                 "operationId": "a613613bdc96b47167766c78e19ec687",
                 "parameters": [
                     {
-                        "name": "order_id",
+                        "name": "order",
                         "in": "path",
                         "description": "ID do pedido",
                         "required": true,
@@ -692,6 +692,209 @@
                                         "status_code": {
                                             "type": "integer",
                                             "example": 500
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Pedidos"
+                ],
+                "summary": "Atualiza o status de um pedido",
+                "description": "Atualiza o status de um pedido existente. O status deve ser um dos seguintes valores: 'open', 'approved', 'finished', ou 'cancelled'. O campo 'total' não deve ser enviado.",
+                "operationId": "a1d8d739b62b9bed298d435a90685433",
+                "parameters": [
+                    {
+                        "name": "order",
+                        "in": "path",
+                        "description": "ID do pedido que será atualizado",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "status"
+                                ],
+                                "properties": {
+                                    "status": {
+                                        "description": "Novo status do pedido",
+                                        "type": "string",
+                                        "enum": [
+                                            "open",
+                                            "approved",
+                                            "finished",
+                                            "cancelled"
+                                        ]
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Pedido atualizado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Pedido atualizado"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "order_id": {
+                                                    "type": "integer",
+                                                    "example": 4
+                                                },
+                                                "order_status": {
+                                                    "type": "string",
+                                                    "example": "approved"
+                                                },
+                                                "total_cost": {
+                                                    "type": "string",
+                                                    "example": "0.07"
+                                                },
+                                                "products": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "product_id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "product_name": {
+                                                                "type": "string",
+                                                                "example": "Pizza Marguerita"
+                                                            },
+                                                            "price": {
+                                                                "type": "string",
+                                                                "example": "2.50"
+                                                            },
+                                                            "quantity": {
+                                                                "type": "integer",
+                                                                "example": 2
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 200
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Pedido não encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Pedido não encontrado"
+                                        },
+                                        "errors": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 404
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Erro interno do servidor."
+                                        },
+                                        "errors": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string",
+                                                "example": "Ocorreu um erro ao processar sua solicitação, tente novamente em instantes"
+                                            }
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 500
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Erro de validação",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Erro de validação."
+                                        },
+                                        "errors": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string",
+                                                "example": "O campo status é obrigatório."
+                                            }
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 422
                                         }
                                     },
                                     "type": "object"
