@@ -16,10 +16,6 @@ class ProductRepository
         $category = $this->categoryRepo
             ->findById($productData['category_id']);
 
-        if (!$category) {
-            throw new NotFoundException('Categoria não encontrada');
-        }
-
         unset($productData['category_id']);
 
         return Product::create([
