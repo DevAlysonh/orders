@@ -50,7 +50,7 @@ it('should return an validation exception if the request does not have products 
     $data = $response->getData(true);
     expect($data['errors'])->not()->toBeEmpty()
         ->and($data['errors']['products'][0])
-            ->toEqual('A lista de produtos é obrigatória.');
+            ->toEqual('A lista de produtos é obrigatória');
 });
 
 it('should return an validation exception if the price of product is invalid', function () {
@@ -71,7 +71,7 @@ it('should return an validation exception if the price of product is invalid', f
 
     expect($data['errors'])->not()->toBeEmpty()
         ->and($data['errors']['products.0.price'][0])
-            ->toEqual('O preço deve ter no máximo duas casas decimais.');
+            ->toEqual('O preço deve ter no máximo duas casas decimais');
 });
 
 it('should return an validation exception if the product does not exists', function () {
@@ -92,7 +92,7 @@ it('should return an validation exception if the product does not exists', funct
 
     expect($data['errors'])->not()->toBeEmpty()
         ->and($data['errors']['products.0.product_id'][0])
-        ->toEqual('O produto não existe.');
+        ->toEqual('O produto não existe');
 });
 
 it('should list all orders', function () {

@@ -29,7 +29,7 @@ it('should return a validation error if a category does not exists', function ()
     $data = $response->getData(true);
 
     expect($data['errors']['category_id'])->not()->toBeEmpty()
-        ->and($data['errors']['category_id'][0])->toEqual('A categoria selecionada é inválida.');
+        ->and($data['errors']['category_id'][0])->toEqual('A categoria selecionada é inválida');
 });
 
 it('should return a validation error if the price has more than two decimal places', function () {
@@ -42,7 +42,7 @@ it('should return a validation error if the price has more than two decimal plac
     $data = $response->getData(true);
 
     expect($data['errors']['price'])->not()->toBeEmpty()
-        ->and($data['errors']['price'][0])->toEqual('O preço deve ter no máximo duas casas decimais.');
+        ->and($data['errors']['price'][0])->toEqual('O preço deve ter no máximo duas casas decimais');
 });
 
 it('should return a validation error if the price is not a numeric value', function () {
@@ -55,8 +55,8 @@ it('should return a validation error if the price is not a numeric value', funct
     $data = $response->getData(true);
 
     expect($data['errors']['price'])->not()->toBeEmpty()
-        ->and($data['errors']['price'][0])->toEqual('O preço deve ser um número válido.')
-        ->and($data['errors']['price'][1])->toEqual('O preço deve ter no máximo duas casas decimais.');
+        ->and($data['errors']['price'][0])->toEqual('O preço deve ser um número válido')
+        ->and($data['errors']['price'][1])->toEqual('O preço deve ter no máximo duas casas decimais');
 });
 
 it('should return a validation error if the name is an invalid string', function () {
@@ -70,5 +70,5 @@ it('should return a validation error if the name is an invalid string', function
 
     expect($data['errors']['name'])->not()->toBeEmpty()
         ->and($data['errors']['name'][0])
-            ->toEqual('Ops! O nome que você escolheu não é válido. Tente não utilizar caracteres especiais.');
+            ->toEqual('Ops! O nome que você escolheu não é válido. Tente não utilizar caracteres especiais');
 });

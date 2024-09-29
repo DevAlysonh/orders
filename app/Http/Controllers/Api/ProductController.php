@@ -14,6 +14,7 @@ use Throwable;
 class ProductController extends Controller
 {
     use ProductControllerDocs;
+
     public function __construct(protected ProductService $productService)
     {
     }
@@ -21,7 +22,7 @@ class ProductController extends Controller
     public function store(CreateProductRequest $request): JsonResponse
     {
         try {
-            $product = $this->productService->newProduct($request->all());
+            $product = $this->productService->newProduct($request->validated());
             return response()->json(
                 ResponseFactory::make(
                     ResponseFactory::SUCCESS,
