@@ -2,16 +2,21 @@
 
 namespace App\Services\Api;
 
-use App\Models\Api\Category;
+use App\Repositories\CategoryRepository;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class CategoryService
 {
     protected string $lastMessage = '';
 
+    public function __construct(protected CategoryRepository $categoryRepo)
+    {
+    }
+
     public function newCategory(array $categoryData): ?array
     {
-        $category = Category::create($categoryData);
+        $category = $this->categoryRepo
+            ->create($categoryData['name']);
 
         $this->lastMessage = 'Categoria cadastrada com sucesso';
         return $category->only(['id', 'name']);
@@ -21,9 +26,7 @@ class CategoryService
     {
         $this->lastMessage = 'Itens do cardápio';
 
-        $menu = Category::with('products:id,category_id,name,price')
-            ->orderBy('name')
-            ->paginate($perPage);
+        $menu = $this->categoryRepo->listAllCategoriesWithItems($perPage);
 
         if ($menu->isEmpty()) {
             $this->lastMessage = 'Seu cardápio ainda não possui nenhum item';

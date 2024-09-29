@@ -6,7 +6,7 @@ use App\Models\Api\Product;
 use App\Services\Api\OrderService;
 
 beforeEach(function () {
-    $orderService = new OrderService();
+    $orderService = app()->make(OrderService::class);
     $this->category = Category::factory()->create();
     $this->product = Product::factory()->state([
         'category_id' => $this->category->id,
