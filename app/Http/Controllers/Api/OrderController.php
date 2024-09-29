@@ -6,6 +6,7 @@ use App\Exceptions\NotFoundException;
 use App\Factories\ResponseFactory;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\CreateOrderRequest;
+use App\Http\Requests\Api\UpdateOrderStatusRequest;
 use App\Services\Api\OrderService;
 use App\Traits\SwaggerDocs\OrderControllerDocs;
 use App\Transformers\OrderListTransformer;
@@ -70,7 +71,36 @@ class OrderController extends Controller
         }
     }
 
-    public function list(string $perPage = '10')
+    public function update(UpdateOrderStatusRequest $request, string $id): JsonResponse
+    {
+        try {
+            $order = $this->orderService->updateOrder($id, $request->validated());
+
+            return response()->json(
+                ResponseFactory::make(
+                    ResponseFactory::SUCCESS,
+                    $this->orderService->getLastMessage(),
+                    Response::HTTP_OK,
+                    OrderTransformer::transform($order)
+                ),
+                Response::HTTP_OK
+            );
+        } catch (NotFoundException $e) {
+            return response()->json(
+                ResponseFactory::make(
+                    ResponseFactory::ERROR,
+                    $this->orderService->getLastMessage(),
+                    Response::HTTP_NOT_FOUND,
+                    []
+                ),
+                Response::HTTP_NOT_FOUND
+            );
+        } catch (Throwable $e) {
+            return $this->internalErrorResponse();
+        }
+    }
+
+    public function list(string $perPage = '10'): JsonResponse
     {
         try {
             $ordersList = $this->orderService->listOrders($perPage);

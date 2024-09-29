@@ -19,13 +19,30 @@ class OrderService
 
         $this->addProductsToOrder($order, $products);
 
-        $this->lastMessage = 'Pedido registrado.';
+        $this->lastMessage = 'Pedido registrado';
+        return $order;
+    }
+
+    public function updateOrder(string $orderId, array $updateData): ?Order
+    {
+        $order = Order::with('products')->find($orderId);
+
+        if (!$order) {
+            $this->lastMessage = 'Pedido não encontrado';
+            throw new NotFoundException();
+        }
+
+        $this->lastMessage = 'Pedido atualizado';
+        $order->update([
+            'status' => $updateData['status']
+        ]);
+
         return $order;
     }
 
     public function listOrders(string $perPage): LengthAwarePaginator
     {
-        $this->lastMessage = 'Lista de pedidos.';
+        $this->lastMessage = 'Lista de pedidos';
         return Order::select('id', 'total')->paginate($perPage);
     }
 
@@ -34,11 +51,11 @@ class OrderService
         $order = Order::with('products')->find($orderId);
 
         if (!$order) {
-            $this->lastMessage = 'O pedido não foi localizado.';
+            $this->lastMessage = 'O pedido não foi localizado';
             throw new NotFoundException();
         }
 
-        $this->lastMessage = 'Detalhes do pedido.';
+        $this->lastMessage = 'Detalhes do pedido';
         return $order;
     }
 

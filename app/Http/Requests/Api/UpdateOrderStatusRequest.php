@@ -3,15 +3,12 @@
 namespace App\Http\Requests\Api;
 
 use App\Factories\ResponseFactory;
-use App\Models\Api\Category;
-use App\Rules\ValidString;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Response;
-use Illuminate\Validation\Rule;
 
-class CreateCategoryRequest extends FormRequest
+class UpdateOrderStatusRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -21,29 +18,18 @@ class CreateCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => [
-                'required',
-                'string',
-                'max:30',
-                new ValidString(),
-                Rule::unique(Category::class, 'name')
-            ]
+            'status' => ['required', 'string','in:open,approved,finished,cancelled'],
+            'total' => ['prohibited']
         ];
     }
 
     public function messages(): array
     {
         return [
-            'name.required' => "O campo name é obrigatório.",
-            'name.string' => "O campo name deve ser uma string.",
-            'name.max' => "O campo name deve ter até 30 caracteres.",
-            'name.unique' => "Já existe uma categoria com esse nome.",
+            'status.in' => 'O status deve ser um desses: "open", "approved", "finished", "cancelled"',
+            'status.required' => 'Campo obrigatório',
+            'total.prohibited' => 'O campo total não é permitido'
         ];
-    }
-
-    public function validated($key = null, $default = null): array
-    {
-        return parent::validated();
     }
 
     protected function failedValidation(Validator $validator)

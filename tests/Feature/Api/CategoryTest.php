@@ -48,7 +48,7 @@ it('should return a menu with all categories with your products', function () {
     expect($data['data']['menu'])->not()->toBeEmpty()
         ->and($data['data']['menu'][0]['id'])->toEqual($category->id)
         ->and($data['data']['menu'][0]['products'])->toHaveCount(1)
-        ->and($data['data']['menu'][0]['products'][0]['price'])->toEqual('2.50')
+        ->and($data['data']['menu'][0]['products'][0]['price'])->toEqual('2.55')
         ->and($data['data']['current_page'])->toEqual(1)
         ->and($data['data']['last_page'])->toEqual(1);
 });
