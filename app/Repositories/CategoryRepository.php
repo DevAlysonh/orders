@@ -21,7 +21,7 @@ class CategoryRepository
             ->paginate($paginate);
     }
 
-    public function findById(string $id): Category
+    public function findById(string $id): ?Category
     {
         return Category::find($id);
     }
