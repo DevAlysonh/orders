@@ -7,7 +7,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class CategoryRepository
 {
-    public function createNew(string $categoryName): Category
+    public function create(string $categoryName): Category
     {
         return Category::create([
             'name' => $categoryName

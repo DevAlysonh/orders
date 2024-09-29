@@ -16,7 +16,7 @@ class CategoryService
     public function newCategory(array $categoryData): ?array
     {
         $category = $this->categoryRepo
-            ->createNew($categoryData['name']);
+            ->create($categoryData['name']);
 
         $this->lastMessage = 'Categoria cadastrada com sucesso';
         return $category->only(['id', 'name']);
