@@ -18,4 +18,5 @@ Route::controller(OrderController::class)->group(function () {
     Route::post('/orders', 'store');
     Route::get('/orders/list/{perPage?}', 'list');
     Route::get('/orders/{order}', 'show');
+    Route::patch('/orders/{order}', 'update');
 });
