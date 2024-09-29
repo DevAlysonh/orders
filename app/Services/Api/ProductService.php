@@ -13,7 +13,7 @@ class ProductService
     {
         $category = Category::find($productData['category_id']);
 
-        $this->lastMessage = 'Produto cadastrado com sucesso.';
+        $this->lastMessage = 'Produto cadastrado com sucesso';
         $product = Product::create([
             'category_id' => $category->id,
             'name' => $productData['name'],
