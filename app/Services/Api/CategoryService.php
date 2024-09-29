@@ -13,20 +13,20 @@ class CategoryService
     {
         $category = Category::create($categoryData);
 
-        $this->lastMessage = 'Categoria cadastrada com sucesso.';
+        $this->lastMessage = 'Categoria cadastrada com sucesso';
         return $category->only(['id', 'name']);
     }
 
     public function getMenu(string $perPage): LengthAwarePaginator
     {
-        $this->lastMessage = 'Itens do cardápio.';
+        $this->lastMessage = 'Itens do cardápio';
 
         $menu = Category::with('products:id,category_id,name,price')
             ->orderBy('name')
             ->paginate($perPage);
 
         if ($menu->isEmpty()) {
-            $this->lastMessage = 'Seu cardápio ainda não possui nenhum item.';
+            $this->lastMessage = 'Seu cardápio ainda não possui nenhum item';
         }
 
         return $menu;
