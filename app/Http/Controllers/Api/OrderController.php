@@ -42,10 +42,10 @@ class OrderController extends Controller
         }
     }
 
-    public function show(string $id): JsonResponse
+    public function show(string $orderId): JsonResponse
     {
         try {
-            $order = $this->orderService->findOrderWithProducts($id);
+            $order = $this->orderService->findOrder($orderId);
 
             return response()->json(
                 ResponseFactory::make(
@@ -71,10 +71,10 @@ class OrderController extends Controller
         }
     }
 
-    public function update(UpdateOrderStatusRequest $request, string $id): JsonResponse
+    public function update(UpdateOrderStatusRequest $request, string $orderId): JsonResponse
     {
         try {
-            $order = $this->orderService->updateOrder($id, $request->validated());
+            $order = $this->orderService->updateOrder($orderId, $request->validated());
 
             return response()->json(
                 ResponseFactory::make(

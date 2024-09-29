@@ -46,7 +46,7 @@ class OrderService
         return Order::select('id', 'total')->paginate($perPage);
     }
 
-    public function findOrderWithProducts(string $orderId): ?Order
+    public function findOrder(string $orderId): ?Order
     {
         $order = Order::with('products')->find($orderId);
 
