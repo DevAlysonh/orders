@@ -1,0 +1,291 @@
+{
+	"info": {
+		"_postman_id": "8c59fcbc-efbd-4dd1-a3f1-c6533b047d47",
+		"name": "Api Orders",
+		"description": "### Api para gerenciar pedidos de um restaurante.\n\nEsta é uma coleção com todos os endpoints disponíveis e dados pré definidos, para que você possa testar as features desta api.  \nCom essa coleção você poderá:\n\n- Criar uma categoria;\n    \n- Criar (N) produtos para uma categoria;\n    \n- Listar o cardápio do restaurante, categorias e seus produtos, paginados;\n    \n- Registrar um pedido;\n    \n- Listar todos os pedidos já registrados;\n    \n- Visualizar detalhes de um pedido específico através do seu identificador único (ID);\n    \n- Editar o status de um pedido.\n    \n\nA API foi construída com PHP + Laravel.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24011849"
+	},
+	"item": [
+		{
+			"name": "Categorias",
+			"item": [
+				{
+					"name": "Cadastrar Categoria",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "/**\n    Para cadastrar uma categoria, basta fornecer o nome da mesma.\n    \n    Como não estamos lidando com autenticação, e temos a garantia que temos apenas um usuário (restaurante), decidi\n    que o nome será de valor único na tabela. Portanto, não são permitidas duas categorias\n    com o mesmo nome.\n*/\n{\n    \"name\": \"Massas\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/categories",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Produtos",
+			"item": [
+				{
+					"name": "Cadastrar Produto",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "/**\n    Para cadastrar um produto basta fornecer o id da categoria, o nome do produto, e o preço.\n    * A categoria deve existir no banco de dados;\n    * O nome deve ser uma string válida, não é permitido carácteres especiais além de acentos;\n    * O preço deve ser um float, com no máximo 2 casas decimais. Ex: 1.99 | 2 | 10.25 | 200;\n*/\n{\n    \"category_id\": 1,\n    \"name\": \"Pizza Napolitana\",\n    \"price\": 99.90\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/products",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pedidos",
+			"item": [
+				{
+					"name": "Registrar um pedido",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "/** O campo \"products\" deve ser um array com um ou mais produtos */\n{\n    \"products\": [\n        {\n            \"product_id\": 1,\n            \"quantity\": 2,\n            \"price\": 99.90\n        },\n        {\n            \"product_id\": 1,\n            \"quantity\": 1,\n            \"price\": 49.90\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/orders",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Lista Pedidos",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/orders/list",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"orders",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Detalhes de um Pedido",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/orders/{{order_id}}",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"orders",
+								"{{order_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualiar Status do Pedido",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "// Possiveis valores: \"open\", \"approved\", \"finished\", \"cancelled\";\n// Não é permitido atualizar o valor total do pedido.\n{\n    \"status\": \"approved\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/orders/{{order_id}}",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"orders",
+								"{{order_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cardápio do Restaurante",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{api_url}}/categories/menu",
+					"host": [
+						"{{api_url}}"
+					],
+					"path": [
+						"categories",
+						"menu"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "api_url",
+			"value": "http://localhost/api",
+			"type": "string"
+		}
+	]
+}
