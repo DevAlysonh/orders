@@ -28,7 +28,6 @@ class Order extends Model
                 $value / 100,
                 2,
                 '.',
-                ' '
             ),
             set: fn (float $value) => $value * 100,
         );
