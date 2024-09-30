@@ -80,3 +80,10 @@ Então, execute os testes da aplicação:
 ```
 docker exec -it orders-app composer test
 ```
+# Tratamento de erros
+
+Os erros são tratados, para que mensagens amigáveis sejam retornadas na API.
+O sistema irá registrar o log de exceptions, no path: `/storage/logs/execptions_log.json`.
+Essa foi uma forma que criei para capturar logs de erros, sem implementar nenhuma ferramenta como Sentry, válida apenas para ambiente de testes e estudos.
+Exemplo de exceção capturada:
+![logDeExcecoes](https://github.com/user-attachments/assets/d7c15623-4aaa-4979-a789-3b56043391ba)
